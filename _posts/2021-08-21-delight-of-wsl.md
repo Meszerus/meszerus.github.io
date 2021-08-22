@@ -144,6 +144,8 @@ Recommended pages for more info (which certainly helped me on the above):
   * [Homebrew on Linux](https://docs.brew.sh/Homebrew-on-Linux) on Homebrew Docs.
   * [Using Brew on Windows 10 with Windows Subsystem for Linux (WSL)](https://medium.com/@edwardbaeg9/using-homebrew-on-windows-10-with-windows-subsystem-for-linux-wsl-c7f1792f88b3) on Medium (by Edward Baeg).
   * [How to Install Homebrew on Windows WSL Ubuntu, and fix “zsh: brew command not found” error](https://stackoverflow.com/questions/64680855/how-to-install-homebrew-on-windows-wsl-ubuntu-and-fix-zsh-brew-command-not-fo) on Stack Overflow.
+* Zsh
+  * [Usermod command in Linux with Examples](https://www.geeksforgeeks.org/usermod-command-in-linux-with-examples/) on GeeksForGeeks.
 
 # Utilising Windows Apps
 
