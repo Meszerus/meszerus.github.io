@@ -15,7 +15,7 @@ I recently purchased a Windows 10 machine, but wanted to still enjoy the develop
 
 Here I'm specifically referring to WSL version 2, which uses a lightweight virtualisation of a Linux kernel, as opposed to WSL version 1 which worked by instead using a partial emulation of a kernel (and as such lacked full compatibility and was slower).
 
-This blog post is basically me keeping track of what I've done, but done so others may benefit so I can also practice at writing about software development.
+This blog post is basically me keeping track of what I've done, but done so others may benefit and I can practice at writing about software development.
 
 # Features
 
@@ -69,9 +69,25 @@ We are prompted to create a user account with a username (`meszerus`, in my case
 
 ## WSL Versions
 
-Now open Command Prompt or Windows PowerShell, and run command `wsl --list --verbose`. You should see your `Ubuntu-20.04` distro is listed as Version `2`: that is to say, it is configured to use WSL2, rather than the original WSL.
+Now open Command Prompt or Windows PowerShell, and run command:
 
-If our Ubuntu distro is listed as Version `1` it can be upgraded with the command `wsl --set-version Ubuntu-20.04 2`. You can make the default WSL version to be `2` for future distro installations can be set with command `wsl --set-default-version 2`.
+```
+wsl --list --verbose
+```
+
+You should see your `Ubuntu-20.04` distro is listed as Version `2`: that is to say, it is configured to use WSL2, rather than the original WSL.
+
+If our Ubuntu distro is listed as Version `1` it can be upgraded with the command:
+
+```
+wsl --set-version Ubuntu-20.04 2
+```
+
+You can make the default WSL version to be `2` for future distro installations can be set with command:
+
+```
+wsl --set-default-version 2
+```
 
 ## More Info
 
@@ -99,25 +115,53 @@ I'm liking Windows Terminal so far; the settings and customisations are handy, a
 
 The package manager I'm familiar on MacOS is [Homebrew](https://brew.sh/), and sure enough we can make use of it here too. Homebrew supports Linux and WSL explicitly, and was made available under the former name "Linuxbrew" but now just goes by the same name of Homebrew.
 
-Homebrew can be installed with the command `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` (at risk of trusting random commands on someone's blog, you can verify this is the correct command from [their official site](https://brew.sh/)). It will install to the directory `/home/linuxbrew/.linuxbrew`.
+Homebrew can be installed with the command:
 
-Before we can crack on utlising Homebrew from our shell, we want to run some commands that verify the installation. The last command in particular is important for us to use it from the shell. For reference, these commands are also found on [their official site](https://docs.brew.sh/Homebrew-on-Linux#install).
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+At risk of trusting random commands on someone's blog, you can verify this is the correct command (and for the next few commands) from [their official site](https://brew.sh/). It will install to the directory `/home/linuxbrew/.linuxbrew`.
+
+Before we can crack on utlising Homebrew from our shell, we want to run some commands that verify the installation.
 
 ```
 test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
 test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+```
+
+This next command in particular is important for us to use it from the shell.
+
+```
 echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 ```
 
-You will need to open a new command line, which can be done as a new tab in Terminal. Verify that Homebrew was installed successfully with command `brew --version`. You can demonstrate the package installation process with `brew install hello`, and view what packages are installed with `brew list`.
+You will need to open a new command line, which can be done as a new tab in Terminal. Verify that Homebrew was installed successfully with command:
+
+```
+brew --version
+```
+
+You can demonstrate the package installation process with:
+
+```
+brew install hello
+```
+
+Then view what packages are installed with:
+
+```
+brew list
+```
 
 ## Zsh
 
 Z shell (Zsh) utilising the framework Oh My Zsh (OMZ) is my shell of choice. First, let's obtain Zsh with command:
 
-`brew install zsh`
-
+```
+brew install zsh
+```
 
 And then OMZ can be installed through the following command (can be verified from [OMZ's official site](https://ohmyz.sh/#install)):
 
