@@ -1,7 +1,7 @@
 ---
 title: "The Delight of Windows Subsystem for Linux"
 date: 2021-08-21T22:00:00-00:00
-last_modified_at: 2021-08-21T22:00:00-00:00
+last_modified_at: 2021-08-22T01:05:00-00:00
 excerpt_separator: "<!--after-excerpt-->"
 categories:
   - blog
@@ -74,3 +74,5 @@ So I quickly noticed that the Ubuntu terminal app had an issue with unicode char
 When you launch the Terminal, we can click the down arrow icon to see our options. You'll notice that the option to launch a Ubuntu command line is among them - it's cool to see our WSL setup has been automatically detected and added for us. But if we go into `Settings`, under `Startup` we can choose to set the `Default profile` to `Ubuntu-20.04` (as I did), and then under the `Ubuntu-20.04` profile menu option, we can configure aspects of that terminal view.
 
 Note that the `Command line` field specifies to run the WSL executable with distribution Ubuntu-20.04, but does not specify a user. Since a user is not defined, it will default to the one we created earlier (`meszerus`, for me). I bring this up because if for some reason you need to access the Linux distro as `root` user, you can specify that within the `Command line` field found here to `wsl.exe -d Ubuntu-20.04 --user root`.
+
+I'm liking Windows Terminal so far; the settings and customisations are handy, as is the native WSL support and ability to multi-tab.
