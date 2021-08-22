@@ -1,5 +1,5 @@
 ---
-title: "The Delight of Windows Subsystem for Linux"
+title: "Windows and Linux, Best Buddies! Exploring Windows Subsystem for Linux"
 date: 2021-08-21T22:00:00-00:00
 last_modified_at: 2021-08-22T01:05:00-00:00
 excerpt_separator: "<!--after-excerpt-->"
@@ -9,17 +9,17 @@ tags:
   - programming
 ---
 
-# Intro to WSL
-
-## Background
-
 I recently purchased a Windows 10 machine, but wanted to still enjoy the developer ecosystem and experience found on MacOS / Linux, and of course this is doable through dual-booting or virtual machines, but seemed like a hassle to set up and continously swap between. So I wanted to know how the dev experience on Windows had progressed since I last used it for software engineering over 2 years ago; I had spotted a few months back the release of Windows Terminal, which seemed slick and came with some bells and whistles around other similar command line apps such as Command Prompt (cmd) and PowerShell. It's through reading about Windows Terminal that I came across the relatively-recent introduction of "Windows Subsystem for Linux" (WSL), and it's been exactly what I needed to enjoy a delightful developer experience across Windows and Linux with barely any hassle.
-
-Here I'm specifically referring to WSL version 2, which uses a lightweight virtualisation of a Linux kernel, as opposed to WSL version 1 which worked by instead using a partial emulation of a kernel (and as such lacked full compatibility and was slower).
 
 <!--after-excerpt-->
 
-## The Powerrrr!
+Here I'm specifically referring to WSL version 2, which uses a lightweight virtualisation of a Linux kernel, as opposed to WSL version 1 which worked by instead using a partial emulation of a kernel (and as such lacked full compatibility and was slower).
+
+This blog post is basically me keeping track of what I've done, but done so others may benefit so I can also practice at writing about software development.
+
+# Features
+
+## Today
 
 The great advantage of using WSL is that I can use Windows and Linux side-by-side in ways that each of them couldn't accompish on their own. For example, WSL allows me to open files in the Linux filesystem using Windows apps. If there's an application that is exclusive to Windows, not a problem, it now becomes part of my day-to-day toolbelt when working with Linux.
 
@@ -28,6 +28,12 @@ Let's say I have a Java project in my Linux filesystem. It has a `.sdkmanrc` fil
 So after using that Unix-exclusive application, let's say I now want to browse the repo directory using an integrated development environment (IDE) or similar text-parsing app that is Windows-exclusive. Well I can do that as my immediate next step without leaving the same command line I ran the SDK statement on. As long as the Windows application I desire is available on my environment variable PATH, I can access it from the Linux command line. One very quick example that does not require any setup once you have WSL running is, `notepad.exe ~/.bashrc`, which opens that file residing in my Linux system using the Windows app Notepad. It's not the most exciting example, but it demonstrates the cool possibilites!
 
 Another advantage is, for example, how I might use Git within my Linux system, but take advantage of Windows Credentials to store my Github personal access token. Linux lacks a native credentials store similar to Windows Credentials or MacOS Keychain, so I can leverage my Windows system to provide this. Nice OS teamwork!
+
+FYI, Windows makes the Linux filesystem accessible through the virtual directory path `wsl$\<name of linux distribution>\` (for us this will be `wsl$\Ubuntu-20.04\`). Likewise, Linux makes the Windows drive partitions accessible through mount points, at the path of `/mnt/c/`, where "c" is the name of the Windows drive.
+
+## Future
+
+Whilst it is currently a preview-only feature, Microsoft is also working on expanding WSL such that we will be able to run graphical user-interface (GUI) Linux apps on our Windows machine too!
 
 # Setting Up WSL
 
@@ -89,17 +95,37 @@ Note that the `Command line` field specifies to run the WSL executable with dist
 
 I'm liking Windows Terminal so far; the settings and customisations are handy, as is the native WSL support and ability to multi-tab.
 
-## Hombrew
+## Homebrew
 
-The package manager I'm familiar on MacOS is [Homebrew](https://brew.sh/), and sure enough we can make use of it here too.
+The package manager I'm familiar on MacOS is [Homebrew](https://brew.sh/), and sure enough we can make use of it here too. Homebrew supports Linux and WSL explicitly, and was made available under the former name "Linuxbrew" but now just goes by the same name of Homebrew.
+
+Homebrew can be installed with the command `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` (at risk of trusting random commands on someone's blog, you can verify this is the correct command from [their official site](https://brew.sh/)). It will install to the directory `/home/linuxbrew/.linuxbrew`.
+
+Before we can crack on utlising Homebrew from our shell, we want to run some commands that verify the installation. The last command in particular is important for us to use it from the shell. For reference, these commands are also found on [their official site](https://docs.brew.sh/Homebrew-on-Linux#install).
+
+```
+test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+```
+
+You will need to open a new command line, which can be done as a new tab in Terminal. Verify that Homebrew was installed successfully with command `brew --version`. You can demonstrate the package installation process with `brew install hello`, and view what packages are installed with `brew list`.
+
+##
+
+
 
 ## More Info
 
 Recommended pages for more info (which certainly helped me on the above):
 
-* [Using Brew on Windows 10 with Windows Subsystem for Linux (WSL)](https://medium.com/@edwardbaeg9/using-homebrew-on-windows-10-with-windows-subsystem-for-linux-wsl-c7f1792f88b3) on Medium (by Edward Baeg).
-* [Troubleshooting in Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal/troubleshooting#set-your-wsl-distribution-to-start-in-the-home--directory-when-launched) on Microsoft Docs.
-* [How to Install Homebrew on Windows WSL Ubuntu, and fix “zsh: brew command not found” error](https://stackoverflow.com/questions/64680855/how-to-install-homebrew-on-windows-wsl-ubuntu-and-fix-zsh-brew-command-not-fo) on Stack Overflow.
+* Windows Terminal
+  * [Troubleshooting in Windows Terminal](https://docs.microsoft.com/en-us/windows/terminal/troubleshooting#set-your-wsl-distribution-to-start-in-the-home--directory-when-launched) on Microsoft Docs.
+* Homebrew
+  * [Homebrew on Linux](https://docs.brew.sh/Homebrew-on-Linux) on Homebrew Docs.
+  * [Using Brew on Windows 10 with Windows Subsystem for Linux (WSL)](https://medium.com/@edwardbaeg9/using-homebrew-on-windows-10-with-windows-subsystem-for-linux-wsl-c7f1792f88b3) on Medium (by Edward Baeg).
+  * [How to Install Homebrew on Windows WSL Ubuntu, and fix “zsh: brew command not found” error](https://stackoverflow.com/questions/64680855/how-to-install-homebrew-on-windows-wsl-ubuntu-and-fix-zsh-brew-command-not-fo) on Stack Overflow.
 
 # Utilising Windows Apps
 
@@ -113,11 +139,13 @@ Recommended pages for more info (which certainly helped me on the above):
 
 Recommended pages for more info (which certainly helped me on the above):
 
-* [Get started using Git on Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-git) on Microsoft Docs.
-* [IntelliJ IDEA - integrated WSL](https://www.jetbrains.com/help/idea/how-to-use-wsl-development-environment-in-product.html) on Jetbrains docs.
-* [Freeze on opening project from WSL2](https://youtrack.jetbrains.com/issue/IDEA-273398) on Jetbrains issue tracker.
-* [Visual Studio Code - Developing in WSL](https://code.visualstudio.com/docs/remote/wsl) on Visual Studio Docs.
-* [BEST Web Dev Setup? Windows & Linux at the same time (WSL)](https://www.youtube.com/watch?v=-atblwgc63E) on Youtube (by Fireship).
+* Git
+  * [Get started using Git on Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-git) on Microsoft Docs.
+* IntelliJ IDEA
+  * [IntelliJ IDEA - integrated WSL](https://www.jetbrains.com/help/idea/how-to-use-wsl-development-environment-in-product.html) on Jetbrains docs.
+  * [Freeze on opening project from WSL2](https://youtrack.jetbrains.com/issue/IDEA-273398) on Jetbrains issue tracker.
+* Visual Studio Code
+  * [Visual Studio Code - Developing in WSL](https://code.visualstudio.com/docs/remote/wsl) on Visual Studio Docs.
 
 # Utilising Linux GUI Apps
 
