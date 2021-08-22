@@ -112,8 +112,26 @@ echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
 
 You will need to open a new command line, which can be done as a new tab in Terminal. Verify that Homebrew was installed successfully with command `brew --version`. You can demonstrate the package installation process with `brew install hello`, and view what packages are installed with `brew list`.
 
-##
+## Zsh
 
+Z shell (Zsh) utilising the framework Oh My Zsh (OMZ) is my shell of choice. First, let's obtain Zsh with command:
+
+`brew install zsh`
+
+
+And then OMZ can be installed through the following command (can be verified from [OMZ's official site](https://ohmyz.sh/#install)):
+
+```
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+Zsh can now be made to be your default shell you use with your command line, rather than the Bash shell we've been using thus far. You can make the swap to Zsh + OMZ with the command:
+
+```
+sudo usermod -s /home/linuxbrew/.linuxbrew/bin/zsh meszerus
+```
+
+Where `meszerus` is my user account name. Open a new Terminal tab and you'll find that you're immediately using the Zsh shell instead of the Bash shell.
 
 
 ## More Info
