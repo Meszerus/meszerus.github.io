@@ -1,7 +1,7 @@
 ---
 title: "Windows and Linux, Best Buddies! Exploring Windows Subsystem for Linux"
 date: 2021-08-21T22:00:00-00:00
-last_modified_at: 2021-09-05T01:05:00-00:00
+last_modified_at: 2021-09-05T17:09:00-00:00
 excerpt_separator: "<!--after-excerpt-->"
 categories:
   - blog
@@ -224,6 +224,33 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec
 Now if we check out a private repo in Linux, it will prompt us for our credentials (such as a Github username and
 personal access token), we input them on this first occasion, and ta-da, they are remembered for us, and we can
 use those credentials across Windows and Linux.
+
+## Docker
+
+We can obviously use Docker directly within Linux, but by making use of Docker on Windows, we can enjoy the GUI as well
+as just have a single Docker installation across Windows and Linux. So let's install
+[Docker Desktop for Windows](https://docs.docker.com/desktop/windows/install/) (current version 4.0.0, which bundles
+Docker Engine 20.10.8 and Docker Compose 1.29.2, among other things), and during the installation process
+making sure to tick the option for "Install required Windows components for WSL 2".
+
+Once it's installed, run the Docker app, accept the service agreement, and it will inform you that the Docker service
+for WSL2 is now running. Now open a new Linux terminal, and run the following command to verify the installation:
+
+```
+docker --version
+```
+
+Now let's try the functionality of pulling a remote image and running it:
+
+```
+docker run hello-world
+```
+
+**Info:** For me, that command failed with error `Got permission denied while trying to connect to the Docker daemon
+socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/create": dial unix
+/var/run/docker.sock: connect: permission denied.` This will happen in a Linux shell that is stale (initialised before
+Docker's install), so simply open up a new Linux shell and it shouldn't pop up again.
+{: .notice--info}
 
 ## IntelliJ IDEA
 
