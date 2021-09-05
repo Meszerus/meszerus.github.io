@@ -1,7 +1,7 @@
 ---
 title: "Windows and Linux, Best Buddies! Exploring Windows Subsystem for Linux"
 date: 2021-08-21T22:00:00-00:00
-last_modified_at: 2021-08-22T01:05:00-00:00
+last_modified_at: 2021-09-05T01:05:00-00:00
 excerpt_separator: "<!--after-excerpt-->"
 categories:
   - blog
@@ -195,7 +195,53 @@ Recommended pages for more info (which certainly helped me on the above):
 
 ## Git Credentials Manager
 
+We'll obviously be wanting to use Git within our Linux environment, but there is one issue with this: when it comes to
+private repositories, we will need to input our credentials every single time. Whereas Windows has "Credentials Manager"
+and  MacOS has its "keychain" for remembering credentials, Linux has no built-in comparison.
+
+First, let's install Git via Homebrew:
+
+```
+brew install git
+```
+
+Then, let's configure it how we need:
+
+```
+git config --global user.name "Your Name"
+git config --global user.email "youremail@domain.com"
+```
+
+It's not unlikely that we'll also want to make use of Git within our Windows environment, and so if we install Git on
+Windows ([current version 2.33.0](https://git-scm.com/download/win)), it comes with "Git Credential Manager", which is
+the Git bridge to Windows Credentials Manager. After installing Git for Windows, Linux can piggyback off its credentials
+ecosystem with command:
+
+```
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe"
+```
+
+Now if we check out a private repo in Linux, it will prompt us for our credentials (such as a Github username and
+personal access token), we input them on this first occasion, and ta-da, they are remembered for us, and we can
+use those credentials across Windows and Linux.
+
 ## IntelliJ IDEA
+
+Install IntelliJ IDEA (ideally through the [JetBrains Toolbox app](https://www.jetbrains.com/toolbox-app/)) in your
+Windows environment. I'm not sure from which version IntelliJ supports WSL, but I'm using Community version `2021.2.1`.
+
+If we wanted to create a new Java project, we would do so using the Java SDK installed in Linux, and set the project
+location to be within the `\\wsl$` filesystem (i.e., `\\wsl$\Ubuntu-20.04\home\meszerus\workspace\demo-project`).
+Alternatively if you wish to open an existing project, you can browse the `\\wsl$` filesystem from within the IntelliJ
+app to open it, and it works just as well.
+
+We can also make it so that the Terminal provided within IntelliJ loads our WSL Zsh shell by default for this Linux
+repo, rather than the Windows cmd shell. From the Terminal window, click the down-arrow icon, select Settings, and under
+`Shell path`, select the following from the drop-down (or enter it manually if it's missing):
+
+```
+wsl.exe --distribution Ubuntu-20.04
+```
 
 ## Visual Studio Code
 
